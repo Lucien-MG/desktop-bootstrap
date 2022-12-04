@@ -3,10 +3,6 @@ Automatic configuration for desktop and laptop.
 
 # How to use it ?
 
-At the command prompt, type:
+At the command prompt, type the following line for a full setup:
 
-`curl -L https://github.com/Lucien-MG/desktop-bootstrap/archive/main.zip -o desktop-bootstrap.zip`.
-
-Then unzip the content:
-
-`unzip desktop-bootstrap.zip`.
+`sudo ansible-pull -U https://github.com/Lucien-MG/desktop-bootstrap.git`
