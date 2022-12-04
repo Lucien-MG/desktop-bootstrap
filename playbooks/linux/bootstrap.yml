@@ -1,0 +1,24 @@
+---
+- name: Linux Bootstrap
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+  - name: Os Detection
+    debug:
+      msg:
+        - Operating System{{':'}} {{ ansible_distribution }}
+
+- name: Git
+  import_playbook: cmds/git.yml
+
+- name: Bash
+  import_playbook: cmds/bash.yml
