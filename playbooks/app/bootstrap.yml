@@ -4,7 +4,7 @@
   connection: local
 
   # gather machine informations
-  gather_facts: yes
+  gather_facts: no
 
   # Enable root previlegies
   become: no
@@ -12,12 +12,11 @@
   # Run suitable scripts
   tasks:
 
-  - name: System Detection
+  - name: Os Family
     debug:
       msg:
-        - System Architecture{{':'}} {{ ansible_architecture }}
-        - Operating System{{':'}} {{ ansible_system }}
+        - Operating System{{':'}} {{ ansible_os_family }}
 
-- name: Linux Bootstrap
+- name: Linux
   import_playbook: linux/bootstrap.yml
   when: ansible_system == "Linux"

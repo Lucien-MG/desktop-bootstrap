@@ -1,0 +1,68 @@
+---
+- name: Archlinux Install Drivers
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+    - name: Install Linux Firmware
+      package:
+        name:
+          - linux-firmware
+
+    - name: Install Linux Utils
+      package:
+        name:
+          - util-linux
+    
+    - name: Install Vulkan
+      package:
+        name:
+          - vulkan-icd-loader
+          - amdvlk
+    
+    - name: Install Power Profile
+      package:
+        name:
+          - power-profiles-daemon
+
+- name: Archlinux Enable Drivers
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+    
+    - name: Enable SSD Trim
+      ansible.builtin.systemd:
+        name: fstrim.service
+        state: started
+        enabled: yes
+        masked: no
+    
+    - name: Enable SSD Trim Timer
+      ansible.builtin.systemd:
+        name: fstrim.timer
+        state: started
+        enabled: yes
+        masked: no
+    
+    - name: Enable Power Profile
+      ansible.builtin.systemd:
+        name: power-profiles-daemon.service
+        state: started
+        enabled: yes
+        masked: no

@@ -7,17 +7,16 @@
   gather_facts: yes
 
   # Enable root previlegies
-  become: yes
+  become: no
 
   # Run suitable scripts
   tasks:
 
-  - name: Operating System Detection
+  - name: Os Detection
     debug:
       msg:
-        - Linux System Detected
-        - Distribution{{':'}} {{ ansible_distribution }}
+        - Operating System{{':'}} {{ ansible_distribution }}
 
-- name: Archlinux Bootstrap
-  import_playbook: archlinux/archlinux.yml
+- name: Archlinux Drivers
+  import_playbook: drivers.yml
   when: ansible_distribution == "Archlinux"
