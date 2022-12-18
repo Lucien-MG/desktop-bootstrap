@@ -12,7 +12,7 @@
   # Run suitable scripts
   tasks:
 
-    - name: install git
+    - name: install vim
       package:
         name:
-          - git
+          - vim

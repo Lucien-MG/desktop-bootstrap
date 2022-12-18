@@ -1,0 +1,37 @@
+---
+- name: Git
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+    - name: install git
+      package:
+        name:
+          - git
+
+- name: Git Config
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable user previlegies
+  become: yes
+  become_user: "{{ ansible_facts.env.SUDO_USER }}"
+
+  # Run suitable scripts
+  tasks:
+
+    - name: Git Config
+      ansible.builtin.template:
+        src: templates/gitconfig.j2
+        dest: "{{ ansible_user_dir }}/.gitconfig"

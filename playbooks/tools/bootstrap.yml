@@ -1,10 +1,10 @@
 ---
-- name: Desktop Bootstrap
+- name: Tools Bootstrap
   hosts: localhost
   connection: local
 
   # gather machine informations
-  gather_facts: yes
+  gather_facts: no
 
   # Enable root previlegies
   become: no
@@ -12,15 +12,12 @@
   # Run suitable scripts
   tasks:
 
-  - name: System Detection
+  - name: Tools
     debug:
       msg:
         - System Architecture{{':'}} {{ ansible_architecture }}
         - Operating System{{':'}} {{ ansible_system }}
+        - Distribution{{':'}} {{ ansible_distribution }}
 
-- name: Linux Bootstrap
-  import_playbook: linux/bootstrap.yml
-  when: ansible_system == "Linux"
-
-- name: Tools Bootstrap
-  import_playbook: tools/bootstrap.yml
+- name: Git
+  import_playbook: git/git.yml

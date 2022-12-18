@@ -21,3 +21,7 @@
 - name: Archlinux Bootstrap
   import_playbook: archlinux/archlinux.yml
   when: ansible_distribution == "Archlinux"
+
+- name: Fedora Bootstrap
+  import_playbook: fedora/fedora.yml
+  when: ansible_distribution == "Fedora"

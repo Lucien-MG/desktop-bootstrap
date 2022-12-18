@@ -23,6 +23,11 @@
       package:
         name:
           - util-linux
+    
+    - name: Install Network Manager
+      package:
+        name:
+          - networkmanager
 
     # Micro Code
     - name: Install AMD CPU Microcode
@@ -31,7 +36,7 @@
           - amd-ucode
       when: ansible_processor[1] == "AuthenticAMD"
     
-    - name: Install INTEL CPU Microcode
+    - name: Install Intel CPU Microcode
       package:
         name:
           - intel-ucode
@@ -58,6 +63,12 @@
           - vulkan-radeon
           - amdvlk
       when: ansible_processor[1] == "AuthenticAMD"
+    
+    - name: Install Intel Vulkan
+      package:
+        name:
+          - vulkan-intel
+      when: ansible_processor[1] == "GenuineIntel"
 
 - name: Archlinux Enable Drivers
   hosts: localhost

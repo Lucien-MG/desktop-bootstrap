@@ -1,10 +1,10 @@
 ---
-- name: App Bootstrap
+- name: Fedora Bootstrap
   hosts: localhost
   connection: local
 
   # gather machine informations
-  gather_facts: no
+  gather_facts: yes
 
   # Enable root previlegies
   become: no
@@ -12,7 +12,7 @@
   # Run suitable scripts
   tasks:
 
-  - name: Os Family
+  - name: Fedora
     debug:
       msg:
-        - Operating System{{':'}} {{ ansible_os_family }}
+        - Operating System{{':'}} {{ ansible_distribution }}

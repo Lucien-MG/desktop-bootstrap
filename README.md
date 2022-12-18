@@ -9,4 +9,4 @@ At the command prompt, type the following line for a full setup:
 
 If the project is cloned use:
 
-`sudo ansible-playbook playbooks/bootstrap.yml`
+`sudo ansible-playbook playbooks/bootstrap.yml -e "@configuration.yml"`
