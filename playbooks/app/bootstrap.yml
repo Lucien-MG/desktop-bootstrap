@@ -1,0 +1,22 @@
+---
+- name: Desktop Bootstrap
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: no
+
+  # Run suitable scripts
+  tasks:
+
+  - name: Os Family
+    debug:
+      msg:
+        - Operating System{{':'}} {{ ansible_os_family }}
+
+- name: Linux
+  import_playbook: linux/bootstrap.yml
+  when: ansible_system == "Linux"

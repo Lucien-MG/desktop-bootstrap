@@ -1,0 +1,26 @@
+---
+- name: Archlinux Bootstrap
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: no
+
+  # Run suitable scripts
+  tasks:
+
+  - name: Os Detection
+    debug:
+      msg:
+        - Operating System{{':'}} {{ ansible_distribution }}
+
+- name: Drivers
+  import_playbook: drivers.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Laptop Optimisation
+  import_playbook: laptop.yml
+  when: ansible_distribution == "Archlinux"

@@ -1,0 +1,52 @@
+---
+- name: Bash Install
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+    - name: install bash
+      package:
+        name:
+          - bash
+    
+    - name: Copy a new bashrc
+      debug:
+        msg:
+          - test {{ ansible_env.HOME }}
+      become: true
+      become_user: "{{ ansible_facts.env.SUDO_USER }}"
+      #copy:
+      #  src: /config/cmds/bash/bashrc
+      #  dest:
+
+- name: Bash Config
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable user previlegies
+  become: yes
+  become_user: "{{ ansible_facts.env.SUDO_USER }}"
+
+  # Run suitable scripts
+  tasks:
+
+    - name: Copy Bashrc
+      copy:
+        src: bashrc
+        dest: "{{ ansible_env.HOME }}/.bashrc"
+    
+    - name: Copy Bash Aliases
+      copy:
+        src: bash_aliases
+        dest: "{{ ansible_env.HOME }}/.bash_aliases"

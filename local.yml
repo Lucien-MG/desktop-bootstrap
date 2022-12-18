@@ -1,11 +1,21 @@
 ---
-- hosts: localhost
+- name: Run Desktop Bootstrap
+  hosts: localhost
   connection: local
 
-  # Enable root previlegies
-  become: true
+  # gather machine informations
+  gather_facts: no
 
+  # Enable root previlegies
+  become: No
+
+  # Run suitable scripts
   tasks:
-  - name: install htop
-    package:
-      name: htop
+
+  - name: System
+    debug:
+      msg:
+        - Start desktop configuration
+  
+- name: Start bootstrap.yml
+  import_playbook: playbooks/bootstrap.yml

@@ -1,0 +1,23 @@
+---
+- name: Linux Bootstrap
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+  - name: Operating System Detection
+    debug:
+      msg:
+        - Linux System Detected
+        - Distribution{{':'}} {{ ansible_distribution }}
+
+- name: Archlinux Bootstrap
+  import_playbook: archlinux/archlinux.yml
+  when: ansible_distribution == "Archlinux"
