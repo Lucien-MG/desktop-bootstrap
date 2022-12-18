@@ -16,6 +16,39 @@
       package:
         name:
           - power-profiles-daemon
+    
+    - name: Install Powertop
+      package:
+        name:
+          - powertop
+
+- name: Config Laptop Tools
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+    
+    - name: Audio Powersave
+      ansible.builtin.template:
+        src: templates/audio_powersave.conf
+        dest: /etc/modprobe.d/audio_powersave.conf
+    
+    - name: Wifi Powersave
+      ansible.builtin.template:
+        src: templates/iwlwifi.conf
+        dest: /etc/modprobe.d/iwlwifi.conf
+    
+    - name: Powertop Systemd Service
+      ansible.builtin.template:
+        src: templates/powertop.service
+        dest: /etc/systemd/system/powertop.service
 
 - name: Enable Laptop Tools
   hosts: localhost
@@ -36,21 +69,10 @@
         state: started
         enabled: yes
         masked: no
-
-- name: Config Laptop Tools
-  hosts: localhost
-  connection: local
-
-  # gather machine informations
-  gather_facts: no
-
-  # Enable root previlegies
-  become: yes
-
-  # Run suitable scripts
-  tasks:
     
-    - name: Audio Powersave
-      ansible.builtin.template:
-        src: templates/audio_powersave.conf
-        dest: /etc/modprobe.d/audio_powersave.conf
+    - name: Enable Powertop
+      ansible.builtin.systemd:
+        name: powertop.service
+        state: started
+        enabled: yes
+        masked: no
