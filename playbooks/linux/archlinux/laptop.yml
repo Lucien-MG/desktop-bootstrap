@@ -1,0 +1,56 @@
+---
+- name: Install Laptop Tools
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+    
+    - name: Install Power Profile
+      package:
+        name:
+          - power-profiles-daemon
+
+- name: Enable Laptop Tools
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+    
+    - name: Enable Power Profile
+      ansible.builtin.systemd:
+        name: power-profiles-daemon.service
+        state: started
+        enabled: yes
+        masked: no
+
+- name: Config Laptop Tools
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: no
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+    
+    - name: Audio Powersave
+      ansible.builtin.template:
+        src: templates/audio_powersave.conf
+        dest: /etc/modprobe.d/audio_powersave.conf

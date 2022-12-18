@@ -4,7 +4,7 @@
   connection: local
 
   # gather machine informations
-  gather_facts: no
+  gather_facts: yes
 
   # Enable root previlegies
   become: yes
@@ -12,6 +12,8 @@
   # Run suitable scripts
   tasks:
 
+    # Install linux Firmware
+    # It should already be installed
     - name: Install Linux Firmware
       package:
         name:
@@ -21,17 +23,41 @@
       package:
         name:
           - util-linux
+
+    # Micro Code
+    - name: Install AMD CPU Microcode
+      package:
+        name:
+          - amd-ucode
+      when: ansible_processor[1] == "AuthenticAMD"
     
-    - name: Install Vulkan
+    - name: Install INTEL CPU Microcode
+      package:
+        name:
+          - intel-ucode
+      when: ansible_processor[1] == "GenuineIntel"
+    
+    # GPU and Hardware Acceleration
+    - name: Install Video Hardware Acceleration (VA-API & VDPAU)
+      package:
+        name:
+          - libva-mesa-driver
+          - mesa-vdpau
+          - libvdpau-va-gl
+          - libva-utils
+    
+    - name: Install Vulkan Loader
       package:
         name:
           - vulkan-icd-loader
-          - amdvlk
-    
-    - name: Install Power Profile
+
+    # Vulkan installation
+    - name: Install AMDGPU Vulkan
       package:
         name:
-          - power-profiles-daemon
+          - vulkan-radeon
+          - amdvlk
+      when: ansible_processor[1] == "AuthenticAMD"
 
 - name: Archlinux Enable Drivers
   hosts: localhost
@@ -56,13 +82,6 @@
     - name: Enable SSD Trim Timer
       ansible.builtin.systemd:
         name: fstrim.timer
-        state: started
-        enabled: yes
-        masked: no
-    
-    - name: Enable Power Profile
-      ansible.builtin.systemd:
-        name: power-profiles-daemon.service
         state: started
         enabled: yes
         masked: no

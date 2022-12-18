@@ -1,5 +1,5 @@
 ---
-- name: Linux Bootstrap
+- name: Archlinux Bootstrap
   hosts: localhost
   connection: local
 
@@ -17,6 +17,10 @@
       msg:
         - Operating System{{':'}} {{ ansible_distribution }}
 
-- name: Archlinux Drivers
+- name: Drivers
   import_playbook: drivers.yml
+  when: ansible_distribution == "Archlinux"
+
+- name: Laptop Optimisation
+  import_playbook: laptop.yml
   when: ansible_distribution == "Archlinux"
