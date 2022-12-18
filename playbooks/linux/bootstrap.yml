@@ -25,3 +25,7 @@
 - name: Fedora Bootstrap
   import_playbook: fedora/fedora.yml
   when: ansible_distribution == "Fedora"
+
+- name: Debian Bootstrap
+  import_playbook: fedora/fedora.yml
+  when: ansible_distribution == "Debian"

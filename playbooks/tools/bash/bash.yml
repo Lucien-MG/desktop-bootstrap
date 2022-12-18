@@ -12,20 +12,10 @@
   # Run suitable scripts
   tasks:
 
-    - name: install bash
+    - name: Install bash
       package:
         name:
           - bash
-    
-    - name: Copy a new bashrc
-      debug:
-        msg:
-          - test {{ ansible_env.HOME }}
-      become: true
-      become_user: "{{ ansible_facts.env.SUDO_USER }}"
-      #copy:
-      #  src: /config/cmds/bash/bashrc
-      #  dest:
 
 - name: Bash Config
   hosts: localhost
@@ -43,10 +33,10 @@
 
     - name: Copy Bashrc
       copy:
-        src: bashrc
+        src: templates/bashrc.j2
         dest: "{{ ansible_env.HOME }}/.bashrc"
     
     - name: Copy Bash Aliases
       copy:
-        src: bash_aliases
+        src: templates/bash_aliases.j2
         dest: "{{ ansible_env.HOME }}/.bash_aliases"

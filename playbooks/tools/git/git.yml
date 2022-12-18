@@ -12,7 +12,7 @@
   # Run suitable scripts
   tasks:
 
-    - name: install git
+    - name: Install git
       package:
         name:
           - git
@@ -34,4 +34,4 @@
     - name: Git Config
       ansible.builtin.template:
         src: templates/gitconfig.j2
-        dest: "{{ ansible_user_dir }}/.gitconfig"
+        dest: "{{ ansible_env.HOME }}/.gitconfig"

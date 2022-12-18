@@ -4,7 +4,7 @@
   connection: local
 
   # gather machine informations
-  gather_facts: no
+  gather_facts: yes
 
   # Enable root previlegies
   become: no
@@ -21,3 +21,6 @@
 
 - name: Git
   import_playbook: git/git.yml
+
+- name: Bash
+  import_playbook: bash/bash.yml

@@ -1,5 +1,0 @@
-# .bash_aliases
-
-# ls
-alias ll="ls -lha"
-
