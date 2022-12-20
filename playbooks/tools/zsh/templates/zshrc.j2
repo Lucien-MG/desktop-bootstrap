@@ -1,0 +1,23 @@
+#
+# zshrc
+#
+
+#
+# options
+#
+
+setopt HIST_SAVE_NO_DUPS      # Do not write a duplicate event to the history file.
+
+#
+# completion
+#
+
+autoload -U compinit
+compinit
+
+#
+# prompt
+#
+
+source $ZDOTDIR/zsh_prompt
+autoload -Uz prompt_purification_setup; prompt_purification_setup

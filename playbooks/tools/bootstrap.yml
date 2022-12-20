@@ -24,3 +24,6 @@
 
 - name: Bash
   import_playbook: bash/bash.yml
+
+- name: Zsh
+  import_playbook: zsh/zsh.yml

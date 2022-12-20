@@ -1,0 +1,32 @@
+#
+# ls
+#
+
+alias ls='ls --color=auto'
+alias l='ls -l'
+alias ll='ls -lahF'
+alias lls='ls -lahFtr'
+alias la='ls -A'
+alias lc='ls -CF'
+
+#
+# grep
+#
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+#
+# pacman
+#
+
+alias pacman_install='sudo pacman -S'       # install
+alias pacman_search='sudo pacman -Ss'       # search
+alias pacman_udpdate='sudo pacman -Syu'     # update
+alias pacman_remove='sudo pacman -R'        # remove package but not dependencies
+alias pacman_auto_remove='sudo pacman -Rs'  # remove package with unused dependencies by other softwares
+alias pacman_remove_cache='sudo pacman -Sc' # remove pacman's cache
+
+alias pacman_auto_all_cache'sudo pacman -Scc'      # empty the whole cache
+alias pacman_remove_lock='rm /var/lib/pacman/db.lck'  # pacman remove locks

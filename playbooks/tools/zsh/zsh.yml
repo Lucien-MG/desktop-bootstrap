@@ -1,0 +1,62 @@
+---
+- name: Zsh Install
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable root previlegies
+  become: yes
+
+  # Run suitable scripts
+  tasks:
+
+    - name: Install Zsh
+      package:
+        name:
+          - zsh
+
+- name: Zsh Config
+  hosts: localhost
+  connection: local
+
+  # gather machine informations
+  gather_facts: yes
+
+  # Enable user previlegies
+  become: yes
+  become_user: "{{ ansible_facts.env.SUDO_USER }}"
+
+  # Run suitable scripts
+  tasks:
+
+    - name: Create Zsh Config Folder
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.config/zsh"
+        state: directory
+        owner: "{{ ansible_env.USER }}"
+    
+    - name: Copy Zsh Env
+      copy:
+        src: templates/zshenv.j2
+        dest: "{{ ansible_env.HOME }}/.zshenv"
+        owner: "{{ ansible_env.USER }}"
+
+    - name: Copy Zshrc
+      copy:
+        src: templates/zshrc.j2
+        dest: "{{ ansible_env.HOME }}/.zshrc"
+        owner: "{{ ansible_env.USER }}"
+    
+    - name: Copy Zsh Aliases
+      copy:
+        src: templates/zsh_aliases.j2
+        dest: "{{ ansible_env.HOME }}/.config/zsh/zsh_aliases"
+        owner: "{{ ansible_env.USER }}"
+    
+    - name: Copy Zsh Prompt
+      copy:
+        src: templates/zsh_prompt.j2
+        dest: "{{ ansible_env.HOME }}/.config/zsh/zsh_prompt"
+        owner: "{{ ansible_env.USER }}"
